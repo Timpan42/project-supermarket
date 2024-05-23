@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "PlayerMovement",
+            "id": "0c57f6ec-d30f-4605-ae5e-fbb7b2c0ce8e",
+            "actions": [
+                {
+                    "name": "HandPosition",
+                    "type": "Value",
+                    "id": "8a608fbc-5b48-47fd-b09e-dbcae430a170",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b29c2984-e758-4368-992e-ed278537b09c",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
