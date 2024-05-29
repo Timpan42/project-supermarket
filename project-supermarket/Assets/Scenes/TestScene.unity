@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 1102806869}
   - component: {fileID: 1102806868}
   - component: {fileID: 1102806870}
+  - component: {fileID: 1102806871}
   m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
@@ -343,6 +344,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588fee2043ca7cf939909ad3150713bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &1102806871
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102806867}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1262303783
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,8 +621,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e248fffc474a777418039ab52ab55e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handSize: {x: 2, y: 2}
+  handDetectorSize: {x: 1.2, y: 1.1}
   handTransform: {fileID: 2009635413}
+  handCollisionDetectorOffset: {x: 0, y: 0.55, z: 0}
   layerToHit:
     serializedVersion: 2
     m_Bits: 64
