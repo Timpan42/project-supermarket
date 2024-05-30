@@ -35,6 +35,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PickUpObject"",
+                    ""type"": ""Button"",
+                    ""id"": ""80ef0357-52bd-4c17-a3f3-1249c5dbdc92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +57,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""HandPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a8613fe-dfed-415b-a533-424760d06c09"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickUpObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +77,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // PlayerMovement
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_HandPosition = m_PlayerMovement.FindAction("HandPosition", throwIfNotFound: true);
+        m_PlayerMovement_PickUpObject = m_PlayerMovement.FindAction("PickUpObject", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +140,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMovement;
     private List<IPlayerMovementActions> m_PlayerMovementActionsCallbackInterfaces = new List<IPlayerMovementActions>();
     private readonly InputAction m_PlayerMovement_HandPosition;
+    private readonly InputAction m_PlayerMovement_PickUpObject;
     public struct PlayerMovementActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerMovementActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @HandPosition => m_Wrapper.m_PlayerMovement_HandPosition;
+        public InputAction @PickUpObject => m_Wrapper.m_PlayerMovement_PickUpObject;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +159,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HandPosition.started += instance.OnHandPosition;
             @HandPosition.performed += instance.OnHandPosition;
             @HandPosition.canceled += instance.OnHandPosition;
+            @PickUpObject.started += instance.OnPickUpObject;
+            @PickUpObject.performed += instance.OnPickUpObject;
+            @PickUpObject.canceled += instance.OnPickUpObject;
         }
 
         private void UnregisterCallbacks(IPlayerMovementActions instance)
@@ -143,6 +169,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @HandPosition.started -= instance.OnHandPosition;
             @HandPosition.performed -= instance.OnHandPosition;
             @HandPosition.canceled -= instance.OnHandPosition;
+            @PickUpObject.started -= instance.OnPickUpObject;
+            @PickUpObject.performed -= instance.OnPickUpObject;
+            @PickUpObject.canceled -= instance.OnPickUpObject;
         }
 
         public void RemoveCallbacks(IPlayerMovementActions instance)
@@ -163,5 +192,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IPlayerMovementActions
     {
         void OnHandPosition(InputAction.CallbackContext context);
+        void OnPickUpObject(InputAction.CallbackContext context);
     }
 }

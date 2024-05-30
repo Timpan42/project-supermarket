@@ -8,6 +8,7 @@ public class PlayerHand : MonoBehaviour
 {
     private PlayerInput playerInput;
     private InputAction handInputPosition;
+    private InputAction handInputPickUpObject;
     private Vector2 mousePosition;
     private Camera camera;
 
@@ -19,6 +20,8 @@ public class PlayerHand : MonoBehaviour
     private RaycastHit2D[] rayHitArray = new RaycastHit2D[5];
     private int rayHitAmount;
 
+    private Transform objectHolder;
+    private bool holdItem = false;
 
     private void Awake()
     {
@@ -28,7 +31,9 @@ public class PlayerHand : MonoBehaviour
     private void OnEnable()
     {
         handInputPosition = playerInput.PlayerMovement.HandPosition;
+        handInputPickUpObject = playerInput.PlayerMovement.PickUpObject;
         handInputPosition.Enable();
+        handInputPickUpObject.Enable();
     }
 
     private void Start()
@@ -40,6 +45,11 @@ public class PlayerHand : MonoBehaviour
     {
         MousePositionUpdate();
         RayFindObject();
+        if (holdItem == true)
+        {
+            MoveObjectInHand();
+        }
+        DropObjectInHand();
     }
 
     private void MousePositionUpdate()
@@ -62,12 +72,41 @@ public class PlayerHand : MonoBehaviour
         handCollisionDetectorOrigin = handTransform.position + handCollisionDetectorOffset;
         rayHitAmount = Physics2D.BoxCastNonAlloc(handCollisionDetectorOrigin, handDetectorSize, 0, Vector2.zero, rayHitArray);
 
-        if (rayHitAmount > 0)
+        if (rayHitAmount > 0 && holdItem == false)
         {
-            for (int i = 0; i < rayHitAmount; i++)
+            if (objectHolder == null)
             {
-                Debug.Log(rayHitArray[i]);
-                Destroy(rayHitArray[i].collider.gameObject);
+                for (int i = 0; i < rayHitAmount; i++)
+                {
+                    objectHolder = rayHitArray[i].transform;
+                    Debug.Log(objectHolder);
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+
+    private void MoveObjectInHand()
+    {
+
+        objectHolder.position = handCollisionDetectorOrigin;
+    }
+
+    private void DropObjectInHand()
+    {
+        if (handInputPickUpObject.WasPressedThisFrame())
+        {
+            if (holdItem == false && objectHolder != null)
+            {
+                holdItem = true;
+            }
+            else
+            {
+                objectHolder = null;
+                holdItem = false;
             }
         }
     }
